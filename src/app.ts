@@ -14,7 +14,7 @@ app.use(express.urlencoded({extended:true}));
 app.get('/', (req:Request, res:Response)=>{
 
 
-    var a;
+    let a;
 
     res.send('hello world')
 
