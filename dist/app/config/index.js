@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 dotenv.config();
-export default {
-    port: process.env.PORT || 9000,
-    mongoURI: process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/test'
+const config = {
+    port: Number(process.env.PORT) || 3000,
+    mongoURI: process.env.MONGO_URI
 };
+export default config;
