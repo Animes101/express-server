@@ -9,7 +9,7 @@ async function startServer(): Promise<void> {
   try{
     // MongoDB connect
     await mongoose.connect(uri);
-    console.log("MongoDB connected successfully ok✅");
+    console.log("MongoDB connected successfully ok✅ mome chage");
 
     // Start server
     app.listen(PORT, () => {
