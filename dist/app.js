@@ -5,7 +5,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
-    let a;
-    res.send('hello world');
+    const a = 'hello server';
+    res.send(a);
 });
 export default app;
