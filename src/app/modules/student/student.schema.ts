@@ -20,7 +20,7 @@ import { IStudent } from './student.interface.js';
 
 });
 
-const User=model<IStudent>('Student', studentSchema);
+const StudentModel=model<IStudent>('Student', studentSchema);
 
-export default User;
+export default StudentModel;
 
