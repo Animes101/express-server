@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 export const studentSchema = new Schema({
     name: { type: String, required: true },
     password: { type: String, required: true },
@@ -14,3 +14,5 @@ export const studentSchema = new Schema({
     depermant: { type: String, required: true },
     isActive: { type: String, enum: ['active', 'inactive'], required: true }
 });
+const User = model('Student', studentSchema);
+export default User;

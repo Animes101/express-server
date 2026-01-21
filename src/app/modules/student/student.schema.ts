@@ -1,5 +1,5 @@
 
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { IStudent } from './student.interface.js';
 
 
@@ -16,6 +16,11 @@ import { IStudent } from './student.interface.js';
   phoneNumber:{type:Number,required:true},
   gurdian:{type:Object,required:true},
   depermant:{type:String,required:true},
-  isActive:{type:String,enum:['active','inactive'],required:true}
+  isActive:{type:String,enum:['active','inactive'],required:true}   
 
 });
+
+const User=model<IStudent>('Student', studentSchema);
+
+export default User;
+
