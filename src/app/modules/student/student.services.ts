@@ -9,6 +9,15 @@ const createStudent= async (student:IStudent)=>{
     return result;
 }
 
+
+const getAllStudents= async()=>{
+
+     const result=await StudentModel.find();
+
+     return result;
+}
+
 export const StudentService={
     createStudent,
+    getAllStudents,
 }
