@@ -22,5 +22,5 @@ import { IStudent } from './student.interface.js';
 
 const StudentModel=model<IStudent>('Student', studentSchema);
 
-export default StudentModel;
+export default   StudentModel;
 
