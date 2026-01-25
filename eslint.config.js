@@ -20,7 +20,7 @@ export default defineConfig([
       // ESLint rules
       'no-var': 'error',
       '@typescript-eslint/no-unused-vars': 'error',
-      'no-console': 'off',
+      'no-console': 'warn',
     },
   },
 ]);
