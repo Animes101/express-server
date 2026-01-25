@@ -1,25 +1,38 @@
-
-
-export type guardian={
-    fatherName:string;
-    motherName:string;
-    phoneNumber:number;
-  };
-
-
+export type Guardian = {
+  fatherName: string;
+  motherName: string;
+  phone: string; // ✅ string (schema অনুযায়ী)
+};
 
 export interface IStudent {
   name: string;
-  password:string;
+  password: string;
   age: number;
+
   gender: 'MALE' | 'FEMALE' | 'OTHER';
-  dateOfBirts:string;
-  bladGroup?:'A+' | 'A-' | 'B+' | 'B-' | 'AB+' | 'AB-' | 'O+' | 'O-';
-  address:string;
+
+  dateOfBirth: string; // ✅ spelling fix
+
+  bloodGroup:
+    | 'A+'
+    | 'A-'
+    | 'B+'
+    | 'B-'
+    | 'AB+'
+    | 'AB-'
+    | 'O+'
+    | 'O-';
+
+  address: string;
   grade: string;
-  email:string;
-  phoneNumber:number;
-  gurdian:guardian;
-  depermant:string;
-  isActive:'active' | 'inactive'
+
+  email: string;
+
+  phoneNumber: string; // ✅ string, number না
+
+  guardian: Guardian; // ✅ spelling fix + type fix
+
+  department: string; // ✅ spelling fix
+
+  isActive: 'active' | 'inactive';
 }
