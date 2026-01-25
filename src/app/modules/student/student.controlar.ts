@@ -4,8 +4,8 @@ import Joi from 'joi';
 
 const createStudent= async(req:Request, res:Response)=>{
  try{
-       const student=req.body;
 
+     const student=req.body;
        //creating a schema joi
 
   const createStudentSchema = Joi.object({
@@ -64,7 +64,21 @@ const createStudent= async(req:Request, res:Response)=>{
     .required(),
 });
 
-    const result=await StudentService.createStudent(student)
+
+     const {error, value}=createStudentSchema.validate(req.body);
+
+     if(error){
+
+        res.status(400).json({
+        success:false,
+        message:'Failed to create student',
+        error:error,                   
+    })
+    
+     }
+
+
+    const result=await StudentService.createStudent(value)
 
     res.status(200).json({
         success:true,
