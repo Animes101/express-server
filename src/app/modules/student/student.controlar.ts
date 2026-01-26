@@ -4,48 +4,39 @@ import createStudentSchema from "./zod.validation.js";
 
 
 
-const createStudent= async(req:Request, res:Response)=>{
- try{
+const createStudent = async (req: Request, res: Response) => {
+  try {
+    const student = req.body;
 
-     const student=req.body;
-       //creating a schema joi
+    const zodParseData = createStudentSchema.safeParse(student);
 
-       const zodParseData=createStudentSchema.parse(student);
+    if (!zodParseData.success) {
+      return res.status(400).json({
+        success: false,
+        message: 'Zod validation failed',
+        error: zodParseData.error.format(),
+      });
+    }
 
-       console.log(zodParseData)
-
-
-    //    if(error){
-
-    //     res.status(400).json({
-    //     success:false,
-    //     message:'Failed to create student',
-    //     error:error,                   
-    // })
-
-    //    }
-
-
-
-
-    const result=await StudentService.createStudent(student)
+    // validated data
+    const result = await StudentService.createStudent(
+      zodParseData.data
+    );
 
     res.status(200).json({
-        success:true,
-        message:'Student created successfully',
-        data:result,
-    })
- }catch(err){
+      success: true,
+      message: 'Student created successfully',
+      data: result,
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: 'Failed to create student',
+      error: err,
+    });
+  }
+};
 
-    res.status(400).json({
-        success:false,
-        message:'Failed to create student',
-        error:err,                   
-    })
-
- }
-
-}
 
 
 const getAllStudents= async(req:Request, res:Response)=>{

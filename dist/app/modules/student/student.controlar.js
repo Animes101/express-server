@@ -3,17 +3,16 @@ import createStudentSchema from "./zod.validation.js";
 const createStudent = async (req, res) => {
     try {
         const student = req.body;
-        //creating a schema joi
-        const zodParseData = createStudentSchema.parse(student);
-        console.log(zodParseData);
-        //    if(error){
-        //     res.status(400).json({
-        //     success:false,
-        //     message:'Failed to create student',
-        //     error:error,                   
-        // })
-        //    }
-        const result = await StudentService.createStudent(student);
+        const zodParseData = createStudentSchema.safeParse(student);
+        if (!zodParseData.success) {
+            return res.status(400).json({
+                success: false,
+                message: 'Zod validation failed',
+                error: zodParseData.error.format(),
+            });
+        }
+        // validated data
+        const result = await StudentService.createStudent(zodParseData.data);
         res.status(200).json({
             success: true,
             message: 'Student created successfully',
@@ -21,7 +20,7 @@ const createStudent = async (req, res) => {
         });
     }
     catch (err) {
-        res.status(400).json({
+        res.status(500).json({
             success: false,
             message: 'Failed to create student',
             error: err,
