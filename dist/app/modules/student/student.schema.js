@@ -67,8 +67,12 @@ const studentSchema = new Schema({
         required: true,
     },
 });
-studentSchema.methods.isUserExits = async function (id) {
+studentSchema.statics.isExitsStudent = async function (id) {
     const exits = StudentModel.findOne({ id });
     return exits;
 };
+// studentSchema.methods.isUserExits=async function(id:string) {
+//   const exits=StudentModel.findOne({id});
+//   return exits;
+// }
 export const StudentModel = model('Student', studentSchema);

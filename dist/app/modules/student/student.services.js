@@ -3,8 +3,8 @@ const createStudent = async (student) => {
     // const result=await StudentModel.create(student);
     // return result;
     const studentInstance = new StudentModel(student);
-    if (await studentInstance.isUserExits(student.id)) {
-        throw new Error('user is exits');
+    if (await StudentModel.isExitsStudent(student.id)) {
+        throw new Error('user is all Redy  exits');
     }
     const result = studentInstance.save();
     return result;

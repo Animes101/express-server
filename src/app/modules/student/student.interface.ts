@@ -41,11 +41,24 @@ export interface IStudent {
 }
 
 
-export type StudentMethod={
 
-   isUserExits(id:string): Promise<IStudent | null>
-   
+//instance static
+
+export interface StudentTypes extends Model<IStudent> {
+
+  isExitsStudent(id:string): Promise<IStudent | null>
+
 }
 
- export type StudentModels=Model<IStudent, Record<string, never>, StudentMethod>
+
+
+
+//  instance method 
+// export type StudentMethod={
+
+//    isUserExits(id:string): Promise<IStudent | null>
+   
+// }
+
+//  export type StudentModels=Model<IStudent, Record<string, never>, StudentMethod>
 

@@ -1,11 +1,11 @@
 import { Schema, model } from 'mongoose';
-import { IStudent, StudentMethod, StudentModels } from './student.interface.js';
+import { IStudent, StudentTypes } from './student.interface.js';
 // import { string } from 'joi';
 
 
 
 
- const studentSchema = new Schema<IStudent, StudentModels, StudentMethod>({
+ const studentSchema = new Schema<IStudent, StudentTypes>({
   name: {
     type: String,
     required: [true, 'name is required'],
@@ -87,7 +87,7 @@ import { IStudent, StudentMethod, StudentModels } from './student.interface.js';
 });
 
 
-studentSchema.methods.isUserExits=async function(id:string) {
+studentSchema.statics.isExitsStudent=async function(id:string) {
 
   const exits=StudentModel.findOne({id});
 
@@ -100,5 +100,14 @@ studentSchema.methods.isUserExits=async function(id:string) {
 
 
 
-export const StudentModel = model<IStudent, StudentModels>('Student', studentSchema);
+// studentSchema.methods.isUserExits=async function(id:string) {
+
+//   const exits=StudentModel.findOne({id});
+
+
+//   return exits;
+  
+// }
+
+export const StudentModel = model<IStudent, StudentTypes>('Student', studentSchema);
 

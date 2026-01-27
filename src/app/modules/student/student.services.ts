@@ -11,10 +11,8 @@ const createStudent= async (student:IStudent)=>{
 
     const studentInstance=new StudentModel(student);
 
-       if( await studentInstance.isUserExits(student.id)){
-
-
-        throw new Error('user is exits');
+       if( await StudentModel.isExitsStudent(student.id)){
+        throw new Error('user is all Redy  exits');
 
          
        }
