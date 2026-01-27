@@ -4,6 +4,7 @@ export const createStudentSchema = z.object({
         .string()
         .min(3, 'Name must be at least 3 characters')
         .transform((value) => value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()),
+    id: z.string(),
     password: z
         .string()
         .min(6, 'Password must be at least 6 characters'),

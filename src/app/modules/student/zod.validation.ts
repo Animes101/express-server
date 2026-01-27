@@ -8,6 +8,7 @@ export const createStudentSchema = z.object({
       (value) =>
         value.charAt(0).toUpperCase() + value.slice(1).toLowerCase()
     ),
+    id:z.string(),
 
   password: z
     .string()

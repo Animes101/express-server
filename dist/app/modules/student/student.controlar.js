@@ -22,7 +22,7 @@ const createStudent = async (req, res) => {
     catch (err) {
         res.status(500).json({
             success: false,
-            message: 'Failed to create student',
+            message: `${err.message}  |  user exists`,
             error: err,
         });
     }

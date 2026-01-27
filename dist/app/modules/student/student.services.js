@@ -1,8 +1,11 @@
-import StudentModel from "./student.schema.js";
+import { StudentModel } from "./student.schema.js";
 const createStudent = async (student) => {
     // const result=await StudentModel.create(student);
     // return result;
     const studentInstance = new StudentModel(student);
+    if (await studentInstance.isUserExits(student.id)) {
+        throw new Error('user is exits');
+    }
     const result = studentInstance.save();
     return result;
 };

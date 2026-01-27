@@ -16,4 +16,5 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/api/v1', StudentRoutes);
 
+
 export default app;

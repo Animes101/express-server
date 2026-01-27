@@ -1,5 +1,6 @@
 import { IStudent } from "./student.interface.js";
-import StudentModel from "./student.schema.js";
+import { StudentModel } from "./student.schema.js";
+
 
 const createStudent= async (student:IStudent)=>{
 
@@ -9,6 +10,14 @@ const createStudent= async (student:IStudent)=>{
     // return result;
 
     const studentInstance=new StudentModel(student);
+
+       if( await studentInstance.isUserExits(student.id)){
+
+
+        throw new Error('user is exits');
+
+         
+       }
 
     const result=studentInstance.save();
 

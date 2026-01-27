@@ -1,9 +1,14 @@
 import { Schema, model } from 'mongoose';
-export const studentSchema = new Schema({
+// import { string } from 'joi';
+const studentSchema = new Schema({
     name: {
         type: String,
         required: [true, 'name is required'],
         set: (value) => value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
+    },
+    id: {
+        type: String,
+        required: [true, 'id is required']
     },
     password: {
         type: String,
@@ -62,5 +67,8 @@ export const studentSchema = new Schema({
         required: true,
     },
 });
-const StudentModel = model('Student', studentSchema);
-export default StudentModel;
+studentSchema.methods.isUserExits = async function (id) {
+    const exits = StudentModel.findOne({ id });
+    return exits;
+};
+export const StudentModel = model('Student', studentSchema);

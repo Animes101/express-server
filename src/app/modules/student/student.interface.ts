@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 export type Guardian = {
   fatherName: string;
   motherName: string;
@@ -6,6 +8,7 @@ export type Guardian = {
 
 export interface IStudent {
   name: string;
+  id:string;
   password: string;
   age: number;
 
@@ -36,3 +39,13 @@ export interface IStudent {
 
   isActive: 'active' | 'inactive';
 }
+
+
+export type StudentMethod={
+
+   isUserExits(id:string): Promise<IStudent | null>
+   
+}
+
+ export type StudentModels=Model<IStudent, Record<string, never>, StudentMethod>
+
