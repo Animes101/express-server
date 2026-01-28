@@ -1,5 +1,8 @@
 import { Schema, model } from 'mongoose';
 import { IStudent, StudentTypes } from './student.interface.js';
+import bcrypt from 'bcrypt';
+import config from '../../config/index.js';
+import { number } from 'joi';
 // import { string } from 'joi';
 
 
@@ -85,6 +88,36 @@ import { IStudent, StudentTypes } from './student.interface.js';
     required: true,
   },
 });
+
+//middewear 
+
+studentSchema.pre('save', async function() {
+
+  this.password=await (bcrypt.hash(this.password, Number(config.bcrypt_Salt)))
+
+});
+
+studentSchema.post('save', function(doc, next){
+
+  
+
+
+doc.password=''
+next()
+
+
+
+
+})
+
+//query middlwer
+
+studentSchema.pre('find', function(next){
+
+  console.log(this)
+
+
+})
 
 
 studentSchema.statics.isExitsStudent=async function(id:string) {

@@ -1,4 +1,6 @@
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
+import config from '../../config/index.js';
 // import { string } from 'joi';
 const studentSchema = new Schema({
     name: {
@@ -66,6 +68,18 @@ const studentSchema = new Schema({
         enum: ['active', 'inactive'],
         required: true,
     },
+});
+//middewear 
+studentSchema.pre('save', async function () {
+    this.password = await (bcrypt.hash(this.password, Number(config.bcrypt_Salt)));
+});
+studentSchema.post('save', function (doc, next) {
+    doc.password = '';
+    next();
+});
+//query middlwer
+studentSchema.pre('find', function (next) {
+    console.log(this);
 });
 studentSchema.statics.isExitsStudent = async function (id) {
     const exits = StudentModel.findOne({ id });
