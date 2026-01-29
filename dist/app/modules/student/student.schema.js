@@ -77,10 +77,6 @@ studentSchema.post('save', function (doc, next) {
     doc.password = '';
     next();
 });
-//query middlwer
-studentSchema.pre('find', function (next) {
-    console.log(this);
-});
 studentSchema.statics.isExitsStudent = async function (id) {
     const exits = StudentModel.findOne({ id });
     return exits;
@@ -89,4 +85,11 @@ studentSchema.statics.isExitsStudent = async function (id) {
 //   const exits=StudentModel.findOne({id});
 //   return exits;
 // }
+studentSchema.pre('aggregate', function () {
+    // Add a $match state to the beginning of each pipeline.
+    console.log(this.pipeline());
+});
+studentSchema.virtual('fullName').get(function () {
+    return `${this.name} ${this.age}`;
+});
 export const StudentModel = model('Student', studentSchema);

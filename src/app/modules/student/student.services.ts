@@ -25,15 +25,31 @@ const createStudent= async (student:IStudent)=>{
 }
 
 
-const getAllStudents= async()=>{
+const getAllStudents = async () => {
+  const result = await StudentModel.aggregate([
+    {
+      $match: { age: { $gt: 30 }}
+    }
+  ]);
 
-     const result=await StudentModel.find();
+  return result;
+}
 
-     return result;
+
+const deleteStudent=async (id:string)=>{
+
+
+    console.log(id)
+
+    const result= await StudentModel.findOneAndDelete({ _id: id })
+
+    return result;
+
 }
 
 export const StudentService={
     createStudent,
     getAllStudents,
+    deleteStudent
 }
 

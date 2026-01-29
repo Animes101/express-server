@@ -10,10 +10,20 @@ const createStudent = async (student) => {
     return result;
 };
 const getAllStudents = async () => {
-    const result = await StudentModel.find();
+    const result = await StudentModel.aggregate([
+        {
+            $match: { age: { $gt: 30 } }
+        }
+    ]);
+    return result;
+};
+const deleteStudent = async (id) => {
+    console.log(id);
+    const result = await StudentModel.findOneAndDelete({ _id: id });
     return result;
 };
 export const StudentService = {
     createStudent,
     getAllStudents,
+    deleteStudent
 };

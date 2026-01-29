@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import { StudentService } from "./student.services.js";
 import createStudentSchema from "./zod.validation.js";
+import { string } from "joi";
+import mongoose from "mongoose";
 
 
 
@@ -58,7 +60,40 @@ const getAllStudents= async(req:Request, res:Response)=>{
     }
 }
 
+
+const deleteStudent = async (req: Request, res: Response) => {
+  try {
+    const id: string = req.params.id as string;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+  return res.status(400).json({
+    success: false,
+    message: 'Invalid MongoDB ObjectId',
+  });
+}
+
+    const result = await StudentService.deleteStudent(id);
+
+    res.status(200).json({
+      success: true,
+      message: 'Student deleted successfully',
+      data: result,
+    });
+
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: 'Failed to delete student',
+      error: err,
+    });
+  }
+};
+
+
+
+
 export const studentController={
     createStudent,
-    getAllStudents
+    getAllStudents,
+    deleteStudent
 }

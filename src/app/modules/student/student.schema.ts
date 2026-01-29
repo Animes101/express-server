@@ -3,6 +3,8 @@ import { IStudent, StudentTypes } from './student.interface.js';
 import bcrypt from 'bcrypt';
 import config from '../../config/index.js';
 import { number } from 'joi';
+import { NextFunction } from 'express';
+import { Query } from 'mongoose';
 // import { string } from 'joi';
 
 
@@ -97,24 +99,11 @@ studentSchema.pre('save', async function() {
 
 });
 
-studentSchema.post('save', function(doc, next){
-
-  
-
-
+studentSchema.post('save', function(doc, next: (err?: Error) => void){
 doc.password=''
 next()
 
 
-
-
-})
-
-//query middlwer
-
-studentSchema.pre('find', function(next){
-
-  console.log(this)
 
 
 })
@@ -132,7 +121,6 @@ studentSchema.statics.isExitsStudent=async function(id:string) {
 
 
 
-
 // studentSchema.methods.isUserExits=async function(id:string) {
 
 //   const exits=StudentModel.findOne({id});
@@ -141,6 +129,19 @@ studentSchema.statics.isExitsStudent=async function(id:string) {
 //   return exits;
   
 // }
+studentSchema.pre('aggregate', function() {
+  // Add a $match state to the beginning of each pipeline.
+  console.log(this.pipeline())
+
+});
+
+
+studentSchema.virtual('fullName').get(function () {
+  return `${this.name} ${this.age}`;
+});
+
+
+
 
 export const StudentModel = model<IStudent, StudentTypes>('Student', studentSchema);
 
