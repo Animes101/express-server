@@ -1,6 +1,4 @@
 import { Schema, model } from 'mongoose';
-import bcrypt from 'bcrypt';
-import config from '../../config/index.js';
 // import { string } from 'joi';
 const studentSchema = new Schema({
     name: {
@@ -69,27 +67,30 @@ const studentSchema = new Schema({
         required: true,
     },
 });
+studentSchema.set('toJSON', { virtuals: true });
+studentSchema.set('toObject', { virtuals: true });
 //middewear 
-studentSchema.pre('save', async function () {
-    this.password = await (bcrypt.hash(this.password, Number(config.bcrypt_Salt)));
-});
-studentSchema.post('save', function (doc, next) {
-    doc.password = '';
-    next();
-});
-studentSchema.statics.isExitsStudent = async function (id) {
-    const exits = StudentModel.findOne({ id });
-    return exits;
-};
+// studentSchema.pre('save', async function() {
+//   this.password=await (bcrypt.hash(this.password, Number(config.bcrypt_Salt)))
+// });
+// studentSchema.post('save', function(doc, next: (err?: Error) => void){
+// doc.password=''
+// next()
+// })
+// studentSchema.statics.isExitsStudent=async function(id:string) {
+//   const exits=StudentModel.findOne({id});
+//   return exits;
+// }
 // studentSchema.methods.isUserExits=async function(id:string) {
 //   const exits=StudentModel.findOne({id});
 //   return exits;
 // }
-studentSchema.pre('aggregate', function () {
-    // Add a $match state to the beginning of each pipeline.
-    console.log(this.pipeline());
-});
+// studentSchema.pre('aggregate', function() {
+//   // Add a $match state to the beginning of each pipeline.
+//   console.log(this.pipeline())
+// });
+// Virtual field define kora
 studentSchema.virtual('fullName').get(function () {
-    return `${this.name} ${this.age}`;
+    return `${this.name} ${this.email}`;
 });
 export const StudentModel = model('Student', studentSchema);

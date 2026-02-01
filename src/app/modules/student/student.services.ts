@@ -26,11 +26,8 @@ const createStudent= async (student:IStudent)=>{
 
 
 const getAllStudents = async () => {
-  const result = await StudentModel.aggregate([
-    {
-      $match: { age: { $gt: 30 }}
-    }
-  ]);
+  
+  const result = await StudentModel.find();
 
   return result;
 }

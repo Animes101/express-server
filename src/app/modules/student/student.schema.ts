@@ -2,9 +2,6 @@ import { Schema, model } from 'mongoose';
 import { IStudent, StudentTypes } from './student.interface.js';
 import bcrypt from 'bcrypt';
 import config from '../../config/index.js';
-import { number } from 'joi';
-import { NextFunction } from 'express';
-import { Query } from 'mongoose';
 // import { string } from 'joi';
 
 
@@ -91,32 +88,35 @@ import { Query } from 'mongoose';
   },
 });
 
+studentSchema.set('toJSON', { virtuals: true });
+studentSchema.set('toObject', { virtuals: true });
+
 //middewear 
 
-studentSchema.pre('save', async function() {
+// studentSchema.pre('save', async function() {
 
-  this.password=await (bcrypt.hash(this.password, Number(config.bcrypt_Salt)))
+//   this.password=await (bcrypt.hash(this.password, Number(config.bcrypt_Salt)))
 
-});
+// });
 
-studentSchema.post('save', function(doc, next: (err?: Error) => void){
-doc.password=''
-next()
-
-
+// studentSchema.post('save', function(doc, next: (err?: Error) => void){
+// doc.password=''
+// next()
 
 
-})
 
 
-studentSchema.statics.isExitsStudent=async function(id:string) {
-
-  const exits=StudentModel.findOne({id});
+// })
 
 
-  return exits;
+// studentSchema.statics.isExitsStudent=async function(id:string) {
+
+//   const exits=StudentModel.findOne({id});
+
+
+//   return exits;
   
-}
+// }
 
 
 
@@ -129,18 +129,17 @@ studentSchema.statics.isExitsStudent=async function(id:string) {
 //   return exits;
   
 // }
-studentSchema.pre('aggregate', function() {
-  // Add a $match state to the beginning of each pipeline.
-  console.log(this.pipeline())
+// studentSchema.pre('aggregate', function() {
+//   // Add a $match state to the beginning of each pipeline.
+//   console.log(this.pipeline())
 
+// });
+
+
+// Virtual field define kora
+studentSchema.virtual('fullName').get(function() {
+  return `${this.name} ${this.email}`;
 });
-
-
-studentSchema.virtual('fullName').get(function () {
-  return `${this.name} ${this.age}`;
-});
-
-
 
 
 export const StudentModel = model<IStudent, StudentTypes>('Student', studentSchema);
